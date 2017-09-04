@@ -1,13 +1,16 @@
-const Koa = require('koa')
 const chalk = require('chalk')
-
-const app = new Koa()
+const koa = require('koa')
 const logger = require('koa-logger')
+const serve = require('koa-static')
+
+const server = new koa()
 const port = 3000;
 
-app.use(logger())
-app.use(ctx => ctx.body = '<h1>Hello reminder!</h1>');
+server
+  .use(logger())
+  .use(serve('public'))
+  .use(ctx => ctx.body = '<h1>Hello reminder!</h1>')
+  .listen(port)
 
-app.listen(port)
 
 console.log(`${chalk.magenta('\nserver is listening on port')} ${chalk.blue(port)}`)
